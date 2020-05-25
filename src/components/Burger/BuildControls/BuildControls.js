@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.module.css';
 
@@ -9,23 +9,25 @@ const CONTROLS = [
     {type: 'bacon', label: 'Bacon'},
 ]
 
-export default function BuildControls(props) {
-    return (
-        <div className={classes.BuildControls}>
-
-            <p>Price: <strong>${ props.price.toFixed(2) }</strong></p>
-
-            {CONTROLS.map((control, index) => {
-                return <BuildControl 
-                                control={control} 
-                                key={control.type + index} 
-                                add={() => props.addmore(control.type)}
-                                remove={() => props.remove(control.type)}
-                                disabled={props.disableinfo[control.type]}/>
-            })}
-
-
-            <button className={classes.OrderButton} disabled={props.price <= 0} onClick={props.placeorder}>ORDER NOW</button>
-        </div>
-    );
+export default class BuildControls extends Component {
+    render() {
+        return (
+            <div className={classes.BuildControls}>
+    
+                <p>Price: <strong>${ this.props.price.toFixed(2) }</strong></p>
+    
+                {CONTROLS.map((control, index) => {
+                    return <BuildControl 
+                                    control={control} 
+                                    key={control.type + index} 
+                                    add={() => this.props.addmore(control.type)}
+                                    remove={() => this.props.remove(control.type)}
+                                    disabled={this.props.disableinfo[control.type]}/>
+                })}
+    
+    
+                <button className={classes.OrderButton} disabled={this.props.price <= 0} onClick={this.props.placeorder}>ORDER NOW</button>
+            </div>
+        );
+    }
 }

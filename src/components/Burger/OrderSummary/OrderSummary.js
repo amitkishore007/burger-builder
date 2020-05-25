@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Button from '../../UI/Button/Button'
 
-const OrderSummary = (props) => {
+class OrderSummary extends Component {
     
-    let items = Object.keys(props.ingredients).filter((key) => props.ingredients[key] > 0).map((key, index) => {
-        return <li key={key+''+index}>{key}: {props.ingredients[key]}</li>;
-    });
+    render() {
+        let items = Object.keys(this.props.ingredients).filter((key) => this.props.ingredients[key] > 0).map((key, index) => {
+            return <li key={key+''+index}>{key}: {this.props.ingredients[key]}</li>;
+        });
+        
+        return (
+            <div>
+                <p>Ingredients</p>
+                <ul>
+                    {items}
+                </ul>
     
-    return (
-        <div>
-            <p>Ingredients</p>
-            <ul>
-                {items}
-            </ul>
-
-            <p>Total Price: ${props.price.toFixed(2)}</p>
-            <Button type="Danger" clicked={props.close}>Cancel</Button>
-            <Button type="Success" clicked={props.purchase}>Continue</Button>
-        </div>
-    )
+                <p>Total Price: ${this.props.price.toFixed(2)}</p>
+                <Button type="Danger" clicked={this.props.close}>Cancel</Button>
+                <Button type="Success" clicked={this.props.purchase}>Continue</Button>
+            </div>
+        )
+    }
 }
 
 export default OrderSummary;
