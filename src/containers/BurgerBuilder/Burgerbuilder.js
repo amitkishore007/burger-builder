@@ -4,7 +4,6 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import Header from '../../components/Header/Header';
 import axiosInstance from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -64,23 +63,16 @@ class BurgerBuilder extends Component {
     }
 
     onPurchaseHandler = () => {
+        const queryParam = [];
+        Object.keys(this.state.ingredients).forEach((key) => {
+            queryParam.push(encodeURIComponent(key) + '=' + encodeURIComponent(this.state.ingredients[key]));
+        });
 
-        this.setState({ loading: true });
-        const dataTosave = {
-            ingredients : {...this.state.ingredients},
-            price: this.state.totalPrice,
-        }
-
-        axiosInstance.post('orders.json', dataTosave)
-            .then((result) => {
-                console.log(result,'Result');
-                this.setState({loading: false, show: false});
-                this.resetState();
-            })
-            .catch((error) => {
-                console.log(error, 'Error');
-                this.setState({loading: false});
-            });
+        queryParam.push('price='+this.state.totalPrice);
+        this.props.history.push({
+            pathname: '/checkout',
+            search: queryParam.join('&')            
+        });
     }
 
     resetState = () => {
@@ -150,7 +142,6 @@ class BurgerBuilder extends Component {
 
         return (
             <Auxiliary>
-                <Header />
                 <Modal close={this.closeModalHandler} show={this.state.show}>
                     {orderSummary}
                 </Modal>
