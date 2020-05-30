@@ -99,8 +99,6 @@ class BurgerBuilder extends Component {
                      );
         }
 
-        console.log(this.props);
-        
         if(this.props.error) {
             burger = <p style={{textAlign:'center'}}>{this.props.error} : Unable to perform the action.</p>
         }
