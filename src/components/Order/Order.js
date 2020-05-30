@@ -22,7 +22,7 @@ export default function Order(props) {
     return (
         <div className={classes.Order}>
             <p>Ingredient: {ingredients}</p>
-            <p>Price: < strong>USD: {props.price ? props.price :0}</strong></p>
+            <p>Price: < strong>USD: {props.price ? props.price.toFixed(2) :0}</strong></p>
         </div>
     )
 }

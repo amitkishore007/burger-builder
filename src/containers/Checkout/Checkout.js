@@ -3,11 +3,12 @@ import CheckoutSummary from '../../components/Burger/CheckoutSummary/CheckoutSum
 import { Route } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import * as actions from '../../store/actions';
 
 class Checkout extends Component {
     
-    state = {
-    }
+    state = {}
 
     checkoutCancelHandler = () => {
         this.props.history.goBack();
@@ -15,6 +16,7 @@ class Checkout extends Component {
 
     checkoutContinueHandler = () => {
         
+        this.props.onPurchaseStart();
         this.props.history.replace({
             pathname: this.props.match.url + '/contact-data'
         });
@@ -37,11 +39,12 @@ class Checkout extends Component {
     render() {
         return (
             <div>
+                { this.props.purchased ? <Redirect to="/" />: null }
+               { !this.props.ingredients ? <Redirect to="/" /> : null }
                { this.props.ingredients ? <CheckoutSummary 
                         ingredients={this.props.ingredients} 
                         checkoutCancel={this.checkoutCancelHandler} 
                         checkoutContinue={this.checkoutContinueHandler}/>: null}
-                {/* <Route path={this.props.match.url + '/contact-data'} component={(props) => (<ContactData ingredients={this.props.ingredients} price={this.state.price} {...props} />)} /> */}
                 <Route path={this.props.match.url + '/contact-data'} component={ContactData} />
             </div>
         )
@@ -50,8 +53,15 @@ class Checkout extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.ingredients
+        ingredients: state.burgerBuilder.ingredients,
+        purchased: state.orders.purchased
     }
 }
 
-export default connect(mapStateToProps)(Checkout); 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onPurchaseStart: () => dispatch(actions.orderPurchaseStart())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout); 

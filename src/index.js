@@ -4,14 +4,25 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import  { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import burgerBuilderReducer from './store/reducers/burgerbuilder';
+import orderReducer from './store/reducers/orders';
+import thunk from 'redux-thunk';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+const rootReducer = combineReducers({
+    burgerBuilder: burgerBuilderReducer,
+    orders: orderReducer
+})
 
 const store = createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    rootReducer,
+    composeEnhancers(
+        applyMiddleware(thunk)
+    )
 );
 
 
