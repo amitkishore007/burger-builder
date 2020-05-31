@@ -16,5 +16,10 @@ export const SAVE_ORDERS = 'SAVE_ORDERS';
 export const SAVE_ORDERS_START = 'SAVE_ORDERS_START';
 export const SAVE_ORDERS_SUCCESS = 'SAVE_ORDERS_SUCCESS';
 export const SAVE_ORDERS_FAILED = 'FETCH_ORDERS_FAILED';
-
 export const ORDER_PURCHASE_START = 'ORDER_PURCHASE_START';
+
+export const AUTH_START = 'AUTH_START';
+export const AUTH = 'AUTH';
+export const AUTH_SUCCESSS = 'AUTH_SUCCESSS';
+export const AUTH_FAILED = 'AUTH_FAILED';
+export const LOGOUT = 'LOGOUT';

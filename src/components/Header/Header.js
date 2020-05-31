@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react'
 import classes from './Header.module.css';
 import Logo from '../UI/Logo/Logo';
 import NavigationItems from '../UI/NavigationItems/NavigationItems';
+import {connect} from 'react-redux';
 
-export default class Header extends PureComponent {
+class Header extends PureComponent {
 
     componentDidMount() {
         console.log('[Header] componentDidMount');
@@ -19,9 +20,17 @@ export default class Header extends PureComponent {
                 <div>MENU</div>
                 <Logo />
                 <nav>
-                   <NavigationItems />
+                   <NavigationItems isAuth={this.props.isAuthenticated}/>
                 </nav>
             </header>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
+
+export default connect(mapStateToProps)(Header);

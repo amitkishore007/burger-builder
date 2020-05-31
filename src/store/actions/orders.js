@@ -1,10 +1,10 @@
 import * as actions from './actionType';
 import axios from '../../axios-orders';
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return (dispatch) => {
         dispatch(fetchOrdersStart());
-        axios.get('orders.json')
+        axios.get('orders.json?key='+token)
             .then((response) => {
                 const { data } = response;
                 const orders = [];
@@ -43,10 +43,10 @@ export const fetchOrdersSuccess = (orders) => {
     }
 }
 
-export const saveOrder = (orderData) => {
+export const saveOrder = (orderData, token) => {
     return (dispatch) => {
         dispatch(saveOrderStart());
-        axios.post('orders.json', orderData)
+        axios.post('orders.json?key='+token, orderData)
             .then((response) => {
                 dispatch(saveOrderSuccess());
             })

@@ -115,7 +115,7 @@ class ContactData extends Component {
             userData: userData
         }
 
-        this.props.onSaveOrder(dataTosave);
+        this.props.onSaveOrder(dataTosave, this.props.token);
     }
 
     changeHandler = (event, element) => {
@@ -198,13 +198,14 @@ const mapStateToProps = (state) => {
         loading: state.orders.loading,
         error: state.orders.error,
         ingredients: state.burgerBuilder.ingredients,
-        price: state.burgerBuilder.totalPrice
+        price: state.burgerBuilder.totalPrice,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSaveOrder: (data) => dispatch(actions.saveOrder(data))
+        onSaveOrder: (data, token) => dispatch(actions.saveOrder(data, token))
     }
 }
 
